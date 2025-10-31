@@ -1,4 +1,6 @@
-const router = require("express").Router();
+import express from "express";
+
+const router = express.Router();
 
 router.get("/", (req, res) => {
   res.send("Todos get all todos");
@@ -11,4 +13,4 @@ router.get("/", (req, res) => {
 // router.delete("/:id");
 // router.post("/:id/restore");
 
-module.exports = router;
+export default router;

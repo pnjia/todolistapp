@@ -1,27 +1,24 @@
-const express = require("express");
+import express from "express";
 const app = express();
 
-const prisma = require("./config/database");
+import prisma from "./config/database.js";
 
-const authRoutes = require("./modules/auth/auth.routes");
-const todoRoutes = require("./modules/todo/todo.routes");
+import authRoutes from "./modules/auth/auth.routes.js";
+import todoRoutes from "./modules/todo/todo.routes.js";
+
+app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("Hello, world! AGAIN.");
 });
 
+app.use("/api/auth", authRoutes);
+app.use("/api/todo", todoRoutes);
+
 async function start() {
   try {
     await prisma.$connect();
     console.log("Connected to the database");
-
-    app.use("/auth", authRoutes);
-
-    app.use("/todo", todoRoutes);
-
-    app.listen(4000, () => {
-      console.log("Server is running on port 4000");
-    });
   } catch (err) {
     console.error("Failed to start server:", err);
     process.exit(1);
@@ -29,3 +26,5 @@ async function start() {
 }
 
 start();
+
+export default app;
