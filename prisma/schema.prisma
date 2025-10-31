@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// ==========================
+// User Model
+// ==========================
+model user {
+  id         Int      @id @default(autoincrement())
+  name       String   @db.VarChar(100)         // nama max 100 char
+  email      String   @unique @db.VarChar(255) // email max 255 char
+  password   String   @db.VarChar(255)         // hash password max 255 char
+
+  todos      todo[]
+
+  created_at DateTime @default(now())
+}
+
+// ==========================
+// Todo Model
+// ==========================
+model todo {
+  id          Int       @id @default(autoincrement())
+
+  user        user      @relation(fields: [userId], references: [id])
+  userId      Int
+
+  title       String    @db.VarChar(255)      // judul todo max 255 char
+  description String?   @db.Text             // text panjang
+  priority    Priority  @default(medium)
+  completed   Boolean   @default(false)
+
+  due_date    DateTime?
+  deleted_at  DateTime?
+
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+// ==========================
+// Enum Priority
+// ==========================
+enum Priority {
+  low
+  medium
+  high
+}
