@@ -23,6 +23,9 @@ model user {
   email      String   @unique @db.VarChar(255) // email max 255 char
   password   String   @db.VarChar(255)         // hash password max 255 char
 
+  refreshToken  String?  @db.Text
+
+
   todos      todo[]
 
   created_at DateTime @default(now())
