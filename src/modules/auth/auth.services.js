@@ -5,8 +5,6 @@ import {
   generateRefreshToken,
   verifyRefreshToken,
 } from "../../utils/jwt.js";
-import { addToken } from "../../utils/tokenBlacklist.js";
-import { errorResponse } from "../../utils/response.js";
 
 export const userRegister = async ({ name, email, password }) => {
   const existingUser = await prisma.user.findUnique({
