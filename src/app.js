@@ -1,12 +1,15 @@
 import express from "express";
 const app = express();
 
+import cookieParser from "cookie-parser";
+
 import prisma from "./config/database.js";
 
 import authRoutes from "./modules/auth/auth.routes.js";
 import todoRoutes from "./modules/todo/todo.routes.js";
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.get("/", (req, res) => {
   res.send("Hello, world! AGAIN.");
