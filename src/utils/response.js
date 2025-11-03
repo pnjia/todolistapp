@@ -11,9 +11,15 @@ export const successResponse = (
   });
 };
 
-export const errorResponse = (res, status = 400, message = "") => {
+export const errorResponse = (
+  res,
+  status = 400,
+  message = "",
+  errors = null
+) => {
   return res.status(status).json({
     status: "error",
     message,
+    errors,
   });
 };
